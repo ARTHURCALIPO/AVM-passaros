@@ -1,0 +1,31 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - master  # Quando um push for feito para a branch 'main'
+  pull_request:
+    branches:
+      - master  # Quando um pull request for feito para a branch 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Ambiente de execução (Ubuntu)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Faz o checkout do código do repositório
+
+      - name: Set up Python
+        uses: actions/setup-python@v4  # Configura a versão do Python
+        with:
+          python-version: '3.x'  # Define a versão do Python que será usada
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Instala as dependências do seu projeto
+
+      - name: Run tests
+        run: |
+          pytest  # Executa os testes automatizados (substitua se usar outro framework de testes)
