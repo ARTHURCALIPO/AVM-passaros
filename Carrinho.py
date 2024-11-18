@@ -1,60 +1,28 @@
-# Importando a lista de produtos do arquivo produtos.py
+# Carrinho.py
+
 from Produtos import produtos
 
-# Lista para armazenar os produtos no carrinho
 carrinho = []
 
-def mostrar_produtos():
-    """Exibe os produtos disponíveis para compra"""
-    print("\nProdutos disponíveis:")
-    for idx, produto in enumerate(produtos, 1):
-        print(f"{idx}. {produto['nome']} - R${produto['preco']:.2f}")
+def adicionar_ao_carrinho(nome_produto, quantidade):
+    """Adiciona um produto ao carrinho"""
+    for produto in produtos:
+        if produto["nome"] == nome_produto:
+            carrinho.append({"produto": produto, "quantidade": quantidade})
+            return f"{quantidade}x {produto['nome']} adicionado(s) ao carrinho"
+    return "Produto não encontrado"
 
-def adicionar_ao_carrinho(indice):
-    """Adiciona o produto selecionado ao carrinho"""
-    if 0 < indice <= len(produtos):
-        produto = produtos[indice - 1]
-        carrinho.append(produto)
-        print(f"{produto['nome']} foi adicionado ao carrinho!")
-    else:
-        print("Seleção inválida! Tente novamente.")
+def remover_do_carrinho(nome_produto):
+    """Remove um produto do carrinho"""
+    for item in carrinho:
+        if item["produto"]["nome"] == nome_produto:
+            carrinho.remove(item)
+            return f"{nome_produto} removido do carrinho"
+    return "Produto não encontrado no carrinho"
 
-def exibir_carrinho():
-    """Exibe os produtos no carrinho"""
-    if carrinho:
-        print("\nCarrinho de Compras:")
-        for produto in carrinho:
-            print(f"{produto['nome']} - R${produto['preco']:.2f}")
-        total = sum([produto['preco'] for produto in carrinho])
-        print(f"Total: R${total:.2f}")
-    else:
-        print("\nO carrinho está vazio!")
-
-def main():
-    """Função principal para interação com o usuário"""
-    while True:
-        mostrar_produtos()
-        
-        print("\nOpções:")
-        print("1. Adicionar produto ao carrinho")
-        print("2. Exibir carrinho")
-        print("3. Sair")
-        
-        opcao = input("Escolha uma opção (1, 2, 3): ")
-        
-        if opcao == "1":
-            try:
-                produto_escolhido = int(input("Digite o número do produto que deseja adicionar: "))
-                adicionar_ao_carrinho(produto_escolhido)
-            except ValueError:
-                print("Entrada inválida! Digite um número.")
-        
-        elif opcao == "2":
-            exibir_carrinho()
-        
-        elif opcao == "3":
-            print("Saindo... Obrigado por comprar conosco!")
-            break
-        
-        else:
-            print("Opção inválida. Tente novamente.")
+def calcular_total():
+    """Calcula o total do carrinho"""
+    total = 0
+    for item in carrinho:
+        total += item["produto"]["preco"] * item["quantidade"]
+    return total

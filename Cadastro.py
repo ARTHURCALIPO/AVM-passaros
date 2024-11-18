@@ -1,22 +1,19 @@
-clientes = []
+# Cadastro.py
 
-def adicionar_cliente(email, senha):
-    # Adiciona o cliente como um dicionário na lista
-    clientes.append({"email": email, "senha": senha})
+usuarios = []  # Lista para armazenar usuários cadastrados
 
-def obter_dados():
-    # Solicita os dados do cliente
-    email = input("Digite seu email: ")
-    senha = input("Digite sua senha: ")
+def cadastrar_usuario(email, senha):
+    """Cadastrar um novo usuário."""
+    for usuario in usuarios:
+        if usuario["email"] == email:
+            return "Usuário já cadastrado"
     
-    # Chama a função para adicionar os dados na lista
-    adicionar_cliente(email, senha)
-    print("Dados adicionados com sucesso!")
-    return True
-    
-def buscar_cliente_por_email(email):
-    """Função para buscar um cliente na lista pelo email."""
-    for cliente in clientes:
-        if cliente["email"] == email:
-            return cliente  # Retorna o cliente se o email for encontrado
-    return None  # Retorna None se o email não for encontrado
+    usuarios.append({"email": email, "senha": senha})
+    return "Usuário cadastrado com sucesso"
+
+def login_usuario(email, senha):
+    """Fazer login de um usuário."""
+    for usuario in usuarios:
+        if usuario["email"] == email and usuario["senha"] == senha:
+            return "Login bem-sucedido"
+    return "Email ou senha incorretos"

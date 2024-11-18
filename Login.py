@@ -1,14 +1,10 @@
-from Cadastro import clientes  # Importando a função e a lista de clientes de cadastro.py
+# Login.py
 
-def realizar_login():
-    """Função que realiza o login verificando se o cliente existe na lista de clientes."""
-    email = input("Digite seu email para login: ")
-    senha = input("Digite sua senha para login: ")
+from Cadastro import usuarios
 
-    # Verificar se o cliente existe na lista
-    for cliente in clientes:
-        if cliente["email"] == email and cliente["senha"] == senha:
-            print("Login bem-sucedido!")
-            return True  # Login bem-sucedido
-    print("Email ou senha incorretos.")
-    return False 
+def login_usuario(email, senha):
+    """Fazer login de um usuário."""
+    for usuario in usuarios:
+        if usuario["email"] == email and usuario["senha"] == senha:
+            return "Login bem-sucedido"
+    return "Email ou senha incorretos"
